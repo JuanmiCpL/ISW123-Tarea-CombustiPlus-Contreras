@@ -26,5 +26,47 @@ namespace CombustiPlus
 
             return true;
         }
+        private decimal CalcularTotal()
+        {
+            string combustible = cmbCombustible.Text;
+            decimal galones = nudGalones.Value;
+
+            decimal precio = combustible switch
+            {
+                "Premium" => 290m,
+                "Regular" => 272m,
+                "Gasoil" => 225m,
+                _ => 0m
+            };
+
+            lstDetalle.Items.Clear();
+
+            decimal total = Math.Round(galones * precio, 2);
+            lstDetalle.Items.Add(FormattableString.Invariant(
+                $"{galones:0.0} gal × RD$ {precio:N2} = RD$ {total:N2}"));
+
+            if (galones >= 20)
+            {
+                total = Math.Round(total * 0.98m, 2);
+                lstDetalle.Items.Add(FormattableString.Invariant(
+                    $"Descuento 20+ galones -2 %: RD$ {total:N2}"));
+            }
+
+            if (cmbPago.Text == "Tarjeta")
+            {
+                total = Math.Round(total * 1.03m, 2);
+                lstDetalle.Items.Add(FormattableString.Invariant(
+                    $"Tarjeta +3 %: RD$ {total:N2}"));
+            }
+
+            lstDetalle.Items.Add(FormattableString.Invariant($"TOTAL: RD$ {total:N2}"));
+            return total;
+        }
+
+        private void btnCotizar_Click(object sender, EventArgs e)
+        {
+            if (!ValidarDatos()) return;
+            CalcularTotal();
+        }
     }
 }
