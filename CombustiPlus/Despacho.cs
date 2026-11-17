@@ -11,11 +11,11 @@ namespace CombustiPlus
         public string Pago { get; set; }
         public double Total { get; set; }
 
-        public Despacho(int numero, string placa, string combustible, double galones, string pago, double total)
+        public Despacho(int numero, string placa, string combustibles, double galones, string pago, double total)
         {
             Numero = numero;
             Placa = placa;
-            Combustible = combustible;
+            Combustible = combustibles;
             Galones = galones;
             Pago = pago;
             Total = total;
